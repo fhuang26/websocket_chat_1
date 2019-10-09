@@ -27,7 +27,7 @@ public class WebSocketChatServer {
     private static Map<String, Session> onlineSessions = new ConcurrentHashMap();
     private static Map<String, String> sessionUser = new ConcurrentHashMap();
 
-    private static void sendMessageToAll(String msg) {
+    private static void sendMessageToAll(String msg) { // msg is a JSON string
         //TODO: add send message method.
         onlineSessions.forEach((id, session) -> {
             try {
@@ -36,12 +36,7 @@ public class WebSocketChatServer {
                 e.printStackTrace();
             }
         });
-        /*
-        for (Map.Entry<String, Session> e: onlineSessions.entrySet()) {
-            Session session = e.getValue();
-            session.getAsyncRemote().sendText(msg);
-        }
-        */
+        
     }
 
     /**
@@ -51,9 +46,8 @@ public class WebSocketChatServer {
     public void onOpen(Session session) throws IOException {
         //TODO: add on open connection.
         onlineSessions.put(session.getId(), session);
-        // sendMessageToAll(Message.jsonStr("", "", Message.ENTER, onlineSessions.size()));
-
-        // System.out.println("len of hash map=" + onlineSessions.size() + "  session=" + session.getId());
+        // sendMessageToAll(Message.jsonStr("", "", Message.ENTER, onlineSessions.size())); not needed because
+        // client js will call onMessage() ?
     }
 
     /**
@@ -62,7 +56,6 @@ public class WebSocketChatServer {
     @OnMessage
     public void onMessage(Session session, String jsonStr) throws IOException {
         //TODO: add send message.
-        // sendMessageToAll(jsonStr);
         Message message = JSON.parseObject(jsonStr, Message.class);
         sessionUser.put(session.getId(), message.getUsername());
         sendMessageToAll(Message.jsonStr(message.getUsername(), message.getMessage(), message.getType(),
