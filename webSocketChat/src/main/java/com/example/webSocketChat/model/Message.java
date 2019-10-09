@@ -44,6 +44,14 @@ public class Message {
     public void setType(String type) {
         this.type = type;
     }
+    
+    public int getOnlineCount() {
+        return onlineCount;
+    }
+
+    public void setOnlineCount(int onlineCount) {
+        this.onlineCount = onlineCount;
+    }
 
     public static String jsonStr(String username, String msg, String type, int onlineTotal) {
         return JSON.toJSONString(new Message(username, msg, type, onlineTotal));
