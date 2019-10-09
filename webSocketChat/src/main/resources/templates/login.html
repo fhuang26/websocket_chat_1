@@ -131,10 +131,12 @@
      * Login : redirect to chat page
      */
     function login() {
+        
+        window.location.href = "http://localhost:8080/chat?username=" + document.getElementById("username").value;
         /*
-        window.location.href = "http://localhost:8080/index?username=" + document.getElementById("username").value;
+        window.location.href = "http://localhost:8080/chat?username=" + $('#username').text();
         */
-        window.location.href = "http://localhost:8080/index?username=" + $('#username').text();
+        true;
     }
     /**
      * Enter to login.
